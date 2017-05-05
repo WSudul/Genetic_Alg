@@ -1375,7 +1375,8 @@ void ReservoirModel::non_vol(std::array<int, 4>& intParams, std::array<float, 6>
 
 
 
-ReservoirModel::ReservoirModel()
+ReservoirModel::ReservoirModel():
+	h(20),por(0.20),k(15 * 0.986923*pow(0.1, 15)),mi_w(1.0),c_w(0.5e-9),c_f(0.6e-9),f(0.75),r_res(300.0),r_aquifer(700.0),t_r(300),r_ed(r_aquifer/r_res),s_w(0.23)
 {
 }
 

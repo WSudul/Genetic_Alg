@@ -262,7 +262,10 @@ public:
 	void setUniformRate(double uniformRate);
 
 	/*!
-		creating and adding a Specimen to selected Group vector.
+
+	adding invdividual T as a Specimen to selected vector Group
+	Vector needs to exist and not to be accessible outside dervied class!
+
 	*/
 	void addSpecimen(std::vector<Specimen> &Group,T  &individual,float fitness);
 
@@ -286,9 +289,6 @@ public:
 	void seedGenerators();  
 
 protected:
-
-
-	
 
 
 	//Basic methods for creating new individuals based on mutation,crossover
@@ -503,26 +503,15 @@ inline GeneticAlghortim<T>::~GeneticAlghortim()
 {
 }
 
-/*!
-	adding invdividual T as a Specimen to vector Group
-	Vector needs to exist and not to be accessible outside dervied class!
 
-*/
 template<typename T>
 inline void GeneticAlghortim<T>::addSpecimen(std::vector<Specimen> &Group,T &individual, float fitness)
 {
 
 	if (Group.size() < maxGroupSize)
-	{
-		std::cout << "pushing Specimen\t"<<fitness<<"\n";
 		Group.push_back(Specimen(individual, fitness));
-
-	}
 	else
-		std::cout << "Unable to push specimen!\n";
-
-
-
+		throw std::exception("Unable to add specimen to selected Group");
 }
 
 template<typename T>
@@ -547,7 +536,7 @@ inline void GeneticAlghortim<T>::removeUnfitSpecimens(std::vector<Specimen> &Gro
 	}
 
 }
-//#TODO change compareFitness into functor so it will match std::sort requirements
+
 //#TODO repurpose it? I already have lambda to do this
 template<typename T>
 inline bool GeneticAlghortim<T>::compareFitness(Specimen & p1, Specimen & p2)

@@ -87,7 +87,7 @@ private:
 	double t_r;// = 273.15;
 	double r_ed;// = r_aquifer / r_res;
 	double s_w;// = 0.23;
-	double pi = 3.1415926535897;
+	const double pi = 3.1415926535897;
 
 
 	const long year = 31536000; //czas trwania roku w sekundach

@@ -17,13 +17,8 @@
 
 int main()
 {
-	std::random_device r[2];
-	std::mt19937 mt[2];
-	mt[0].seed(r[0]());
-	mt[1].seed(r[1]());
-
-
-
+	
+	//min and max values (boundaries)
 	ReservoirParams min, max;
 	min.intParams = { 1,1,100,301};
 	min.floatParams = { 0.05f,0.90f,0.40f,0.60f,0.05f,0.00f };
@@ -32,12 +27,9 @@ int main()
 	max.floatParams = { 0.30f,1.10f,0.90f,0.90f,1.0f,0.60f };
 	GasReservoir obj(100, min, max);
 
-	std::array<std::uniform_int_distribution<int>, std::tuple_size<decltype(ReservoirParams().intParams)>::value>dist1;
-	std::array<std::uniform_real_distribution<float>, std::tuple_size<decltype(ReservoirParams().floatParams)>::value>dist2;
-	
-
 	std::cout << "initializing\n";
 
+	//data sets - NEED to be equal sizes
 	std::vector<double> p = { 100,90,80,70,65,60,50,40,35,30 };
 	std::vector<double> g_p = { 3,8.35,17,25,29,33,36,39,41,43 };
 	std::vector<double> t = { 0,2,3,4,5,6,7,8,9,10 };
@@ -47,16 +39,17 @@ int main()
 	//std::vector<double> t = { 0,2,3,4};
 	//std::vector<double> w_p = { 0,12,300,4000 };
 
-	std::cout << "rozmiary=" << p.size() << " " << w_p.size() << " " << g_p.size() <<" "<<t.size()<< std::endl;
-
-
-
-
+	//load data to object
 	obj.setModelCalculation(p, g_p, t, w_p);
+	
+	//initialize with random values 
 	obj.init(50, 100);
+
+
 	std::cout << "trying to find solution\n";
 	//obj.setMutationRate(0.30);
 	ReservoirParams solution;
+
 	solution=obj.findSolution(1000,40,5,0.5);
 	std::cout << "Solution found" << std::endl;
 	for (int i = 0; i < 4; i++)
